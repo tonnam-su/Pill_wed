@@ -1,0 +1,90 @@
+item {
+  id: 1
+  name: 'Dimenhydrinate_50mg'
+}
+
+item {
+  id: 2
+  name: 'Madiplot_20mg'
+}
+
+item {
+  id: 3
+  name: 'Simvastatin_40mg'
+}
+
+item {
+  id: 4
+  name: 'Propranolol_40mg'
+}
+
+item {
+  id: 5
+  name: 'Metformin_500mg'
+}
+
+item {
+  id: 6
+  name: 'Enalapril_20mg'
+}
+
+item {
+  id: 7
+  name: 'Atenolol_100mg'
+}
+
+item {
+  id: 8
+  name: 'Atorvastatin_40mg'
+}
+
+item {
+  id: 9
+  name: 'Propranolol_10mg'
+}
+
+item {
+  id: 10
+  name: 'Spironolactone_25mg'
+}
+
+item {
+  id: 11
+  name: 'Glipizide_5mg'
+}
+
+item {
+  id: 12
+  name: 'Amlodipine_10mg'
+}
+
+item {
+  id: 13
+  name: 'Simvastatin_20mg'
+}
+
+item {
+  id: 14
+  name: 'Losartan_50mg'
+}
+
+item {
+  id: 15
+  name: 'Atenolol_50mg'
+}
+
+item {
+  id: 16
+  name: 'Atorvastatin_80mg'
+}
+
+item {
+  id: 17
+  name: 'Metoprolol_100mg'
+}
+
+item {
+  id: 18
+  name: 'Metformin_850mg'
+}
+

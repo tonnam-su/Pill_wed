@@ -1,0 +1,24 @@
+    "Dimenhydrinate_50mg",
+    "Madiplot_20mg",
+    "Simvastatin_40mg",
+    "Propranolol_40mg",
+    "Metformin_500mg",
+    "Enalapril_20mg",
+    "Atenolol_100mg",
+    "Atorvastatin_40mg",
+    "Propranolol_10mg",
+    "Spironolactone_25mg",
+    "Glipizide_5mg",
+    "Amlodipine_10mg",
+    "Simvastatin_20mg",
+    "Losartan_50mg",
+    "Atenolol_50mg",
+    "Atorvastatin_80mg",
+    "Metoprolol_100mg",
+    "Metformin_850mg"
+
+
+penny
+nickel
+dime
+quarter

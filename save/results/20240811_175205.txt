@@ -1,0 +1,5 @@
+Metoprolol_100mg 0.9108 0 0 0 0
+Atorvastatin_80mg 0.8976 0 0 0 0
+Propranolol_40mg 0.8912 0 0 0 0
+Unknown 0.6541 0 0 0 0
+Amlodipine_10mg 0.6131 0 0 0 0
