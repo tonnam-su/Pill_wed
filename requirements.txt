@@ -1,6 +1,4 @@
 os
 numpy
 streamlit
-matplotlib.pyplot
-Image
-ImageDraw
+matplotlib
