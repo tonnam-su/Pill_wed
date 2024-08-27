@@ -1,4 +1,2 @@
-Atorvastatin_40mg 0.8369 0 0 0 0
-Spironolactone_25mg 0.7827 0 0 0 0
-Propranolol_40mg 0.6452 0 0 0 0
-Dimenhydrinate_50mg 0.5459 0 0 0 0
+Propranolol_40mg 0.8033 0 0 0 0
+Propranolol_40mg 0.7825 0 0 0 0

@@ -1,0 +1,5 @@
+Propranolol_40mg 0.9220 0 0 0 0
+Propranolol_40mg 0.7855 0 0 0 0
+Atorvastatin_80mg 0.7508 0 0 0 0
+Metoprolol_100mg 0.7401 0 0 0 0
+Propranolol_40mg 0.7331 0 0 0 0

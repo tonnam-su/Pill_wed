@@ -20,7 +20,7 @@ def load_labelmap(labelmap_path):
 def preprocess_image(image, height, width):
     img = image.resize((width, height))
     img = np.array(img, dtype=np.float32)
-    img = img / 255.0
+    img = img / 255.0  # Normalize to [0, 1]
     img = np.expand_dims(img, axis=0)
     return img.astype(np.float32)
 
@@ -36,33 +36,43 @@ def predict(interpreter, image, input_details, output_details):
 
     return boxes, classes, scores
 
-# Function to get top predictions
-def get_top_predictions(classes, scores, label_map, threshold=0.4):
+# Non-Maximum Suppression (NMS)
+def nms(boxes, scores, iou_threshold=0.5):
+    indices = tf.image.non_max_suppression(
+        boxes=boxes,
+        scores=scores,
+        max_output_size=50,
+        iou_threshold=iou_threshold
+    )
+    return indices.numpy()
+
+# Function to get top predictions after applying NMS
+def get_top_predictions(classes, scores, boxes, label_map, threshold=0.5, iou_threshold=0.5):
+    indices = nms(boxes, scores, iou_threshold=iou_threshold)
     predictions = []
-    for i, score in enumerate(scores):
-        if score >= threshold:
-            class_id = int(classes[i])  # Convert to integer ID
+    for i in indices:
+        if scores[i] >= threshold:
+            class_id = int(classes[i])
             label = label_map.get(class_id, 'Unknown')
-            predictions.append((label, score))
+            predictions.append((label, scores[i], boxes[i]))
     return predictions
 
 # Function to draw boxes and labels on the image
-def draw_boxes(image, boxes, classes, scores, label_map, threshold=0.5):
-    draw = ImageDraw.Draw(image)
+def draw_boxes(image, boxes, classes, scores, label_map, threshold=0.5, iou_threshold=0.5):
     width, height = image.size
+    draw = ImageDraw.Draw(image)
     
-    for i, score in enumerate(scores):
-        if score >= threshold:
-            class_id = int(classes[i])
-            ymin, xmin, ymax, xmax = boxes[i]
-            ymin = int(max(1, ymin * height))
-            xmin = int(max(1, xmin * width))
-            ymax = int(min(height, ymax * height))
-            xmax = int(min(width, xmax * width))
-            
-            label = label_map.get(class_id, 'Unknown')
-            draw.rectangle([xmin, ymin, xmax, ymax], outline='red', width=3)
-            draw.text((xmin, ymin - 10), f"{label} {score*100:.2f}%", fill='red')
+    predictions = get_top_predictions(classes, scores, boxes, label_map, threshold, iou_threshold)
+    
+    for label, score, box in predictions:
+        ymin, xmin, ymax, xmax = box
+        ymin = int(max(1, ymin * height))
+        xmin = int(max(1, xmin * width))
+        ymax = int(min(height, ymax * height))
+        xmax = int(min(width, xmax * width))
+        
+        draw.rectangle([xmin, ymin, xmax, ymax], outline='red', width=3)
+        draw.text((xmin, ymin - 10), f"{label} {score*100:.2f}%", fill='red')
     
     return image
 
@@ -75,7 +85,9 @@ def save_results_to_txt(detections, savepath, image_path):
 
     with open(txt_savepath, 'w') as f:
         for detection in detections:
-            f.write('%s %.4f %d %d %d %d\n' % (detection[0], detection[1], detection[2], detection[3], detection[4], detection[5]))
+            label, score, box = detection
+            ymin, xmin, ymax, xmax = box
+            f.write(f'{label} {score:.4f} {ymin} {xmin} {ymax} {xmax}\n')
 
 # Streamlit app
 st.title('Pills Detection')
@@ -102,9 +114,8 @@ if uploaded_file is not None:
     
     # Perform prediction
     boxes, classes, scores = predict(interpreter, image, input_details, output_details)
-    predictions = get_top_predictions(classes, scores, label_map)
     
-    # Annotate image
+    # Annotate image with NMS
     annotated_image = draw_boxes(image, boxes, classes, scores, label_map)
     st.image(annotated_image, caption='Annotated Image', use_column_width=True)
     
@@ -113,15 +124,9 @@ if uploaded_file is not None:
     if not os.path.exists(savepath):
         os.makedirs(savepath)
     
-    detections = []
-    for i, score in enumerate(scores):
-        if score >= 0.5:
-            class_id = int(classes[i])
-            ymin, xmin, ymax, xmax = boxes[i]
-            detections.append([label_map.get(class_id, 'Unknown'), score, ymin, xmin, ymax, xmax])
-    
-    save_results_to_txt(detections, savepath, uploaded_file.name)
+    predictions = get_top_predictions(classes, scores, boxes, label_map)
+    save_results_to_txt(predictions, savepath, uploaded_file.name)
     
     st.header('Predicted Medications:')
-    for label, score in predictions:
+    for label, score, _ in predictions:
         st.write(f"_{label}_: {score * 100:.2f}%")

@@ -1,0 +1,5 @@
+Propranolol_40mg 0.8039 0 0 0 0
+Madiplot_20mg 0.7945 0 0 0 0
+Madiplot_20mg 0.7847 0 0 0 0
+Amlodipine_10mg 0.7632 0 0 0 0
+Propranolol_40mg 0.6375 0 0 0 0

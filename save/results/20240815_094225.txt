@@ -1,0 +1,3 @@
+Propranolol_40mg 0.8309 0 0 0 0
+Atorvastatin_40mg 0.7202 0 0 0 0
+Dimenhydrinate_50mg 0.6555 0 0 0 0
