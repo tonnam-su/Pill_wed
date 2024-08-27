@@ -1,6 +1,5 @@
-streamlit==1.25.0
-tensorflow==2.17.0
-numpy==1.23.5
-pillow==9.2.0
-matplotlib==3.5.3
-
+numpy
+tensorflow
+Pillow
+streamlit
+matplotlib
